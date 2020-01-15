@@ -38,7 +38,7 @@
 #include <turtlebot3_msgs/Sound.h>
 #include <turtlebot3_msgs/VersionInfo.h>
 
-#include <turtlebot3.h>
+#include <hcrobot_motor_driver.h>
 #include "hcrobot_paras.h"
 
 #include <math.h>
@@ -46,7 +46,7 @@
 #include <FreeSixIMU.h>
 #include <FIMU_ADXL345.h>
 #include <FIMU_ITG3200.h>
-
+#include "CommunicationUtils.h"
 #include <Wire.h>
 
 #define FIRMWARE_VER "1.2.3"
@@ -196,7 +196,7 @@ static uint32_t tTime[3];
 /*******************************************************************************
 * Declaration for motor
 *******************************************************************************/
-Turtlebot3MotorDriver motor_driver;
+HCRMotorDriver motor_driver;
 
 /*******************************************************************************
 * Calculation for odometry

@@ -50,7 +50,7 @@ void setup()
   tf_broadcaster.init(nh);
 
   // Setting for Dynamixel motors
-  motor_driver.init(NAME);
+  motor_driver.init();
 
   // Setting for IMU
 //  sensors.init();
@@ -86,6 +86,10 @@ void loop()
   if ((t - tTime[0]) >= (1000 / CONTROL_MOTOR_SPEED_FREQUENCY))
   {
     updateGoalVelocity();
+//    DEBUG_SERIAL.print("Update Velocity: ");
+//    Serial.print(goal_velocity[0]);
+//    Serial.print(" | ");  
+//    Serial.println(goal_velocity[1]);
     motor_driver.controlMotor(WHEEL_RADIUS, WHEEL_SEPARATION, goal_velocity);
     tTime[0] = t;
   }
@@ -108,6 +112,9 @@ void loop()
   {
     publishImuMsg();
     publishMagMsg();
+//    DEBUG_SERIAL.print("Quatenions:");
+//    serialPrintFloatArr(q, 4);
+//    DEBUG_SERIAL.println();
     tTime[2] = t;
   }
 
@@ -167,6 +174,10 @@ void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
 {
   goal_velocity_from_cmd[LINEAR]  = cmd_vel_msg.linear.x;
   goal_velocity_from_cmd[ANGULAR] = cmd_vel_msg.angular.z;
+//  DEBUG_SERIAL.print("Callback CMD Velocity: ");
+//  Serial.print(cmd_vel_msg.linear.x);
+//  Serial.print(" | ");  
+//  Serial.println(cmd_vel_msg.linear.x);
 
   goal_velocity_from_cmd[LINEAR]  = constrain(goal_velocity_from_cmd[LINEAR],  MIN_LINEAR_VELOCITY, MAX_LINEAR_VELOCITY);
   goal_velocity_from_cmd[ANGULAR] = constrain(goal_velocity_from_cmd[ANGULAR], MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY);
@@ -496,15 +507,15 @@ ros::Time rosNow()
 /*******************************************************************************
   Time Interpolation function (deprecated)
 *******************************************************************************/
-ros::Time addMicros(ros::Time & t, uint32_t _micros)
-{
-  uint32_t sec, nsec;
-
-  sec  = _micros / 1000 + t.sec;
-  nsec = _micros % 1000000000 + t.nsec;
-
-  return ros::Time(sec, nsec);
-}
+//ros::Time addMicros(ros::Time & t, uint32_t _micros)
+//{
+//  uint32_t sec, nsec;
+//
+//  sec  = _micros / 1000 + t.sec;
+//  nsec = _micros % 1000000000 + t.nsec;
+//
+//  return ros::Time(sec, nsec);
+//}
 
 /*******************************************************************************
   Start Gyro Calibration

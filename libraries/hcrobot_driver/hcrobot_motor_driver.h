@@ -23,8 +23,8 @@
 #include <HardwareSerial.h>
 
 // Limit values (XM430-W210-T and XM430-W350-T)
-#define BURGER_DXL_LIMIT_MAX_VELOCITY            265     // MAX RPM is 61 when XL is powered 12.0V
-#define WAFFLE_DXL_LIMIT_MAX_VELOCITY            330     // MAX RPM is 77 when XM is powered 12.0V
+//#define BURGER_DXL_LIMIT_MAX_VELOCITY            265     // MAX RPM is 61 when XL is powered 12.0V
+//#define WAFFLE_DXL_LIMIT_MAX_VELOCITY            330     // MAX RPM is 77 when XM is powered 12.0V
 
 #define LEFT                            0
 #define RIGHT                           1
@@ -38,22 +38,19 @@
 
 
 
-class Turtlebot3MotorDriver
+class HCRMotorDriver
 {
  public:
-  Turtlebot3MotorDriver();
-  ~Turtlebot3MotorDriver();
-  bool init(String turtlebot3);
+  HCRMotorDriver();
+  ~HCRMotorDriver();
+  bool init(void);
   void close(void);
   bool readEncoder(int32_t &left_value, int32_t &right_value);
   bool writeVelocity(int32_t left_value, int32_t right_value);
   bool controlMotor(const float wheel_radius, const float wheel_separation, float* value);
 
  private:
-  uint8_t left_wheel_id_;
-  uint8_t right_wheel_id_;
-
-  uint16_t dynamixel_limit_max_velocity_;
+  uint16_t limit_max_velocity;
 };
 
 #endif // TURTLEBOT3_MOTOR_DRIVER_H_
